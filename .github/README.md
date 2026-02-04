@@ -8,16 +8,12 @@ A production-ready, full-stack Transportation Management System built with moder
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Live Demo](#-live-demo)
-- [Screenshots](#-screenshots)
 - [Architecture](#-architecture)
 - [Getting Started](#-getting-started)
 - [Project Structure](#-project-structure)
 - [API Documentation](#-api-documentation)
 - [Authentication](#-authentication)
-- [Deployment](#-deployment)
 - [Testing](#-testing)
-- [Contributing](#-contributing)
-- [License](#-license)
 
 ## ✨ Features
 
