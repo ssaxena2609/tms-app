@@ -26,7 +26,6 @@ const App: React.FC = () => {
     limit: 12,
   });
 
-  // Check if user is already logged in
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userStr = localStorage.getItem('user');
@@ -37,7 +36,6 @@ const App: React.FC = () => {
         setCurrentUser(user);
         setIsAuthenticated(true);
       } catch (error) {
-        // Invalid stored data, clear it
         localStorage.removeItem('token');
         localStorage.removeItem('user');
       }
@@ -49,7 +47,7 @@ const App: React.FC = () => {
       filter: Object.keys(filters).length > 0 ? filters : undefined,
       pagination,
     },
-    skip: !isAuthenticated, // Skip query if not authenticated
+    skip: !isAuthenticated,
   });
 
   const [deleteShipment] = useMutation(DELETE_SHIPMENT);

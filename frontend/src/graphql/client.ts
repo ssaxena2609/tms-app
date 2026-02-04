@@ -8,10 +8,8 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  // Get the authentication token from local storage if it exists
   const token = localStorage.getItem('token');
   
-  // Return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
@@ -20,7 +18,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// Error handling link
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) =>

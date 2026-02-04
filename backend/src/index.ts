@@ -16,16 +16,14 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:5173';
 async function startServer() {
   const app = express();
 
-  // Create Apollo Server
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    introspection: true, // Enable GraphQL Playground
+    introspection: true,
   });
 
   await server.start();
 
-  // Enable CORS for all routes
   app.use(cors({
     origin: [CORS_ORIGIN, 'http://localhost:5173', 'http://localhost:3000'],
     credentials: true,
@@ -33,13 +31,11 @@ async function startServer() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
-  // Middleware
   app.use(
     '/graphql',
     express.json(),
     expressMiddleware(server, {
       context: async ({ req }): Promise<Context> => {
-        // Get token from header
         const token = req.headers.authorization?.replace('Bearer ', '');
         
         if (token) {
@@ -47,7 +43,6 @@ async function startServer() {
             const user = authService.verifyToken(token);
             return { user };
           } catch (error) {
-            // Invalid token, continue without user
             return {};
           }
         }
@@ -57,7 +52,6 @@ async function startServer() {
     })
   );
 
-  // Health check endpoint
   app.get('/health', (_, res) => {
     res.json({ status: 'OK', timestamp: new Date().toISOString() });
   });

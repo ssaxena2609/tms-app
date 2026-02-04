@@ -17,11 +17,9 @@ class ShipmentService {
     this.shipments = generateMockShipments();
   }
 
-  // Get all shipments with filtering and pagination
   getShipments(filter?: ShipmentFilter, pagination?: PaginationInput): PaginatedShipments {
     let filteredShipments = [...this.shipments];
 
-    // Apply filters
     if (filter) {
       if (filter.status) {
         filteredShipments = filteredShipments.filter(s => s.status === filter.status);
@@ -43,7 +41,6 @@ class ShipmentService {
 
     const totalCount = filteredShipments.length;
     
-    // Apply pagination
     const page = pagination?.page || 1;
     const limit = pagination?.limit || 10;
     const startIndex = (page - 1) * limit;
@@ -62,12 +59,10 @@ class ShipmentService {
     };
   }
 
-  // Get single shipment by ID
   getShipmentById(id: string): Shipment | undefined {
     return this.shipments.find(s => s.id === id);
   }
 
-  // Search shipments by tracking number or shipper/carrier name
   searchShipments(searchTerm: string): Shipment[] {
     const term = searchTerm.toLowerCase();
     return this.shipments.filter(s => 
@@ -79,7 +74,6 @@ class ShipmentService {
     );
   }
 
-  // Create new shipment
   createShipment(input: ShipmentInput): Shipment {
     const now = new Date().toISOString();
     const trackingNumber = `TRK${uuidv4().substring(0, 13).toUpperCase().replace(/-/g, '')}`;
@@ -115,7 +109,6 @@ class ShipmentService {
     return newShipment;
   }
 
-  // Update existing shipment
   updateShipment(input: UpdateShipmentInput): Shipment {
     const index = this.shipments.findIndex(s => s.id === input.id);
     
@@ -136,7 +129,6 @@ class ShipmentService {
     return updatedShipment;
   }
 
-  // Delete shipment
   deleteShipment(id: string): boolean {
     const index = this.shipments.findIndex(s => s.id === id);
     
@@ -148,7 +140,6 @@ class ShipmentService {
     return true;
   }
 
-  // Toggle flag on shipment
   toggleFlagShipment(id: string): Shipment {
     const shipment = this.shipments.find(s => s.id === id);
     
@@ -162,7 +153,6 @@ class ShipmentService {
     return shipment;
   }
 
-  // Add tracking data to shipment
   addTrackingData(id: string, location: string, status: string, notes?: string): Shipment {
     const shipment = this.shipments.find(s => s.id === id);
     
@@ -182,12 +172,10 @@ class ShipmentService {
     return shipment;
   }
 
-  // Get all shipments (for testing)
   getAllShipments(): Shipment[] {
     return this.shipments;
   }
 
-  // Clear all shipments (for testing)
   clearShipments(): void {
     this.shipments = [];
   }

@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
 
-// Auth Queries
 export const LOGIN = gql`
   mutation Login($input: LoginInput!) {
     login(input: $input) {
@@ -41,7 +40,6 @@ export const GET_ME = gql`
   }
 `;
 
-// Shipment Queries
 export const GET_SHIPMENTS = gql`
   query GetShipments($filter: ShipmentFilter, $pagination: PaginationInput) {
     shipments(filter: $filter, pagination: $pagination) {

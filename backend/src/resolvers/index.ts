@@ -13,14 +13,10 @@ const shipmentService = new ShipmentService();
 const shipmentResolvers = {
   Query: {
     shipments: (_: unknown, { filter, pagination }: { filter?: ShipmentFilter; pagination?: PaginationInput }, _context: Context) => {
-      // Optional: Require authentication
-      // if (!_context.user) throw new Error('Not authenticated');
       return shipmentService.getShipments(filter, pagination);
     },
     
     shipment: (_: unknown, { id }: { id: string }, _context: Context) => {
-      // Optional: Require authentication
-      // if (!_context.user) throw new Error('Not authenticated');
       const shipment = shipmentService.getShipmentById(id);
       if (!shipment) {
         throw new Error(`Shipment with ID ${id} not found`);
@@ -29,15 +25,12 @@ const shipmentResolvers = {
     },
     
     searchShipments: (_: unknown, { searchTerm }: { searchTerm: string }, _context: Context) => {
-      // Optional: Require authentication
-      // if (!_context.user) throw new Error('Not authenticated');
       return shipmentService.searchShipments(searchTerm);
     }
   },
 
   Mutation: {
     createShipment: (_: unknown, { input }: { input: ShipmentInput }, context: Context) => {
-      // Require authentication for mutations
       if (!context.user) throw new Error('Not authenticated');
       return shipmentService.createShipment(input);
     },
@@ -49,7 +42,6 @@ const shipmentResolvers = {
     
     deleteShipment: (_: unknown, { id }: { id: string }, context: Context) => {
       if (!context.user) throw new Error('Not authenticated');
-      // Only admins can delete
       if (context.user.role !== 'ADMIN') {
         throw new Error('Not authorized. Admin access required.');
       }
@@ -72,7 +64,6 @@ const shipmentResolvers = {
   }
 };
 
-// Merge resolvers
 export const resolvers = {
   Query: {
     ...shipmentResolvers.Query,

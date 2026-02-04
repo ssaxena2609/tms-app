@@ -21,7 +21,6 @@ export const generateMockShipments = (): Shipment[] => {
     const pickup = cities[Math.floor(Math.random() * cities.length)];
     let delivery = cities[Math.floor(Math.random() * cities.length)];
     
-    // Ensure pickup and delivery are different
     while (delivery.city === pickup.city) {
       delivery = cities[Math.floor(Math.random() * cities.length)];
     }

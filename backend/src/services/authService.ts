@@ -10,7 +10,6 @@ class AuthService {
   private users: User[] = [];
 
   constructor() {
-    // Create default admin and employee users for demo
     this.seedUsers();
   }
 
@@ -41,32 +40,27 @@ class AuthService {
   }
 
   async register(input: RegisterInput): Promise<AuthPayload> {
-    // Check if user already exists
     const existingUser = this.users.find(u => u.email === input.email);
     if (existingUser) {
       throw new Error('User with this email already exists');
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(input.password, 10);
 
-    // Create new user
     const newUser: User = {
       id: uuidv4(),
       email: input.email,
       password: hashedPassword,
       name: input.name,
-      role: input.role || UserRole.EMPLOYEE, // Default to employee
+      role: input.role || UserRole.EMPLOYEE,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
     this.users.push(newUser);
 
-    // Generate token
     const token = this.generateToken(newUser);
 
-    // Return user without password
     const { password, ...userWithoutPassword } = newUser;
 
     return {
@@ -76,22 +70,18 @@ class AuthService {
   }
 
   async login(input: LoginInput): Promise<AuthPayload> {
-    // Find user by email
     const user = this.users.find(u => u.email === input.email);
     if (!user) {
       throw new Error('Invalid email or password');
     }
 
-    // Verify password
     const isValidPassword = await bcrypt.compare(input.password, user.password);
     if (!isValidPassword) {
       throw new Error('Invalid email or password');
     }
 
-    // Generate token
     const token = this.generateToken(user);
 
-    // Return user without password
     const { password, ...userWithoutPassword } = user;
 
     return {
@@ -140,7 +130,6 @@ class AuthService {
     );
   }
 
-  // For testing purposes
   clearUsers(): void {
     this.users = [];
     this.seedUsers();

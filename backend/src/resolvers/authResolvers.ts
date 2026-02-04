@@ -34,5 +34,4 @@ export const authResolvers = {
   },
 };
 
-// Export authService for use in context
 export { authService };
