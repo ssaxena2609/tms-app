@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 4173 --host 0.0.0.0",
-    "serve": "vite preview --port ${PORT:-4173} --host 0.0.0.0 --strictPort --no-open",
+    "serve": "vite preview --host 0.0.0.0 --strictPort --no-open",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
