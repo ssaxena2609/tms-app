@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview --port 4173 --host 0.0.0.0",
-    "serve": "vite preview --host 0.0.0.0 --strictPort --no-open",
+    "serve": "npx sirv-cli dist --host 0.0.0.0 --port $PORT --single --cors",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -20,7 +20,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-    "react-toastify": "^10.0.4"
+    "react-toastify": "^10.0.4",
+    "sirv-cli": "^2.0.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
