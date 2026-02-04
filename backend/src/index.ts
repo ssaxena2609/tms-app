@@ -11,7 +11,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
-const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:5173';
+const CORS_ORIGIN = process.env.CORS_ORIGIN || 'https://tms-frontend-production-1a65.up.railway.app';
 
 async function startServer() {
   const app = express();
@@ -25,7 +25,12 @@ async function startServer() {
   await server.start();
 
   app.use(cors({
-    origin: [CORS_ORIGIN, 'http://localhost:5173', 'http://localhost:3000'],
+    origin: [
+      CORS_ORIGIN, 
+      'http://localhost:5173', 
+      'http://localhost:3000',
+      'https://tms-frontend-production-1a65.up.railway.app'
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
