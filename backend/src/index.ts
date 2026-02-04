@@ -25,13 +25,17 @@ async function startServer() {
 
   await server.start();
 
+  // Enable CORS for all routes
+  app.use(cors({
+    origin: [CORS_ORIGIN, 'http://localhost:5173', 'http://localhost:3000'],
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }));
+
   // Middleware
   app.use(
     '/graphql',
-    cors<cors.CorsRequest>({
-      origin: CORS_ORIGIN,
-      credentials: true,
-    }),
     express.json(),
     expressMiddleware(server, {
       context: async ({ req }): Promise<Context> => {

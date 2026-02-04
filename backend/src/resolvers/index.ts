@@ -12,13 +12,15 @@ const shipmentService = new ShipmentService();
 
 const shipmentResolvers = {
   Query: {
-    shipments: (_: unknown, { filter, pagination }: { filter?: ShipmentFilter; pagination?: PaginationInput }, context: Context) => {
+    shipments: (_: unknown, { filter, pagination }: { filter?: ShipmentFilter; pagination?: PaginationInput }, _context: Context) => {
       // Optional: Require authentication
-      // if (!context.user) throw new Error('Not authenticated');
+      // if (!_context.user) throw new Error('Not authenticated');
       return shipmentService.getShipments(filter, pagination);
     },
     
-    shipment: (_: unknown, { id }: { id: string }) => {
+    shipment: (_: unknown, { id }: { id: string }, _context: Context) => {
+      // Optional: Require authentication
+      // if (!_context.user) throw new Error('Not authenticated');
       const shipment = shipmentService.getShipmentById(id);
       if (!shipment) {
         throw new Error(`Shipment with ID ${id} not found`);
@@ -26,7 +28,9 @@ const shipmentResolvers = {
       return shipment;
     },
     
-    searchShipments: (_: unknown, { searchTerm }: { searchTerm: string }) => {
+    searchShipments: (_: unknown, { searchTerm }: { searchTerm: string }, _context: Context) => {
+      // Optional: Require authentication
+      // if (!_context.user) throw new Error('Not authenticated');
       return shipmentService.searchShipments(searchTerm);
     }
   },
